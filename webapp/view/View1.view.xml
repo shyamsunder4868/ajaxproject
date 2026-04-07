@@ -1,0 +1,41 @@
+<mvc:View controllerName="project3.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Task Management">
+        <content>
+            <HBox class="sapUiSmallMargin">
+                <Button text="Load" press="onLoad" class="sapUiSmallMarginEnd"/>
+                <Button text="Create" press="openCreateDialog" class="sapUiSmallMarginEnd"/>
+                <Button text="Update" press="openUpdateDialog" class="sapUiSmallMarginEnd"/>
+                <Button text="Delete" press="onDelete" class="sapUiSmallMarginEnd"/>
+            </HBox>
+
+            <Table id="taskTable" items="{LocalModel>/data}" mode="SingleSelectLeft">
+                <columns>
+                    <Column><Text text="Name"/></Column>
+                    <Column><Text text="Employee ID"/></Column>
+                    <Column><Text text="Task ID"/></Column>
+                    <Column><Text text="Task"/></Column>
+                    <Column><Text text="Start Date"/></Column>
+                    <Column><Text text="End Date"/></Column>
+                    <Column><Text text="Hours"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{LocalModel>EmployeeName}"/>
+                            <Text text="{LocalModel>EmployeeID}"/>
+                            <Text text="{LocalModel>TaskID}"/>
+                            <Text text="{LocalModel>TaskName}"/>
+                            <Text text="{LocalModel>StartDate}"/>
+                            <Text text="{LocalModel>EndDate}"/>
+                            <Text text="{LocalModel>HoursWorked}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
