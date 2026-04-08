@@ -1,41 +1,219 @@
-<mvc:View controllerName="project3.controller.View1"
+<mvc:View
+    controllerName="project3.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-
-    <Page title="Task Management">
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+>
+    <Page title="{i18n>app.title}">
         <content>
-            <HBox class="sapUiSmallMargin">
-                <Button text="Load" press="onLoad" class="sapUiSmallMarginEnd"/>
-                <Button text="Create" press="openCreateDialog" class="sapUiSmallMarginEnd"/>
-                <Button text="Update" press="openUpdateDialog" class="sapUiSmallMarginEnd"/>
-                <Button text="Delete" press="onDelete" class="sapUiSmallMarginEnd"/>
-            </HBox>
+            <VBox class="sapUiResponsiveMargin">
+                <fb:FilterBar
+                    id="View1_id_filterBar"
+                    search="View1_onSearch"
+                    clear="View1_onClearFilters"
+                    showRestoreButton="false"
+                    showClearOnFB="true"
+                    showGoOnFB="true"
+                    showFilterConfiguration="false"
+                    useToolbar="false"
+                >
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem
+                            groupName="__$INTERNAL$"
+                            name="Search"
+                            label="{i18n>search.label}"
+                            visibleInFilterBar="true"
+                        >
+                            <fb:control>
+                                <SearchField
+                                    id="View1_id_searchField"
+                                    width="16rem"
+                                    placeholder="{i18n>search.placeholder}"
+                                    search="View1_onSearch"
+                                    liveChange="View1_onSearch"
+                                />
+                            </fb:control>
+                        </fb:FilterGroupItem>
 
-            <Table id="taskTable" items="{LocalModel>/data}" mode="SingleSelectLeft">
-                <columns>
-                    <Column><Text text="Name"/></Column>
-                    <Column><Text text="Employee ID"/></Column>
-                    <Column><Text text="Task ID"/></Column>
-                    <Column><Text text="Task"/></Column>
-                    <Column><Text text="Start Date"/></Column>
-                    <Column><Text text="End Date"/></Column>
-                    <Column><Text text="Hours"/></Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{LocalModel>EmployeeName}"/>
-                            <Text text="{LocalModel>EmployeeID}"/>
-                            <Text text="{LocalModel>TaskID}"/>
-                            <Text text="{LocalModel>TaskName}"/>
-                            <Text text="{LocalModel>StartDate}"/>
-                            <Text text="{LocalModel>EndDate}"/>
-                            <Text text="{LocalModel>HoursWorked}"/>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+                        <fb:FilterGroupItem
+                            groupName="__$INTERNAL$"
+                            name="StartDate"
+                            label="{i18n>filter.startdate.label}"
+                            visibleInFilterBar="true"
+                        >
+                            <fb:control>
+                                <ComboBox
+                                    id="View1_id_startDateFilter"
+                                    width="14rem"
+                                    placeholder="{i18n>filter.startdate.placeholder}"
+                                    items="{LocalModel>/startDateList}"
+                                >
+                                    <core:Item
+                                        key="{LocalModel>key}"
+                                        text="{ path: 'LocalModel>text', formatter: '.formatter.formatTableDate' }"
+                                    />
+                                </ComboBox>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+
+                <Table
+                    id="View1_id_taskTable"
+                    items="{LocalModel>/data}"
+                    mode="SingleSelectLeft"
+                    inset="false"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    sticky="ColumnHeaders,HeaderToolbar"
+                    class="sapUiSmallMarginTop"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <content>
+                                <Title
+                                    text="{= ${i18n>panel.header} + '(' + ${LocalModel>/data}.length + ')' }"
+                                    level="H2"
+                                />
+
+                                <ToolbarSpacer />
+
+                                <Button
+                                    text="{i18n>button.load}"
+                                    press="View1_onLoad"
+                                    type="Transparent"
+                                    icon="sap-icon://refresh"
+                                    tooltip="{i18n>button.load}"
+                                />
+
+                                <Button
+                                    text="{i18n>button.create}"
+                                    press="View1_openCreateDialog"
+                                    type="Emphasized"
+                                    icon="sap-icon://add"
+                                    tooltip="{i18n>button.create}"
+                                />
+
+                                <Button
+                                    text="{i18n>button.update}"
+                                    press="View1_openUpdateDialog"
+                                    type="Transparent"
+                                    icon="sap-icon://edit"
+                                    tooltip="{i18n>button.update}"
+                                />
+
+                                <Button
+                                    text="{i18n>button.delete}"
+                                    press="View1_onDelete"
+                                    type="Reject"
+                                    icon="sap-icon://delete"
+                                    tooltip="{i18n>button.delete}"
+                                />
+                            </content>
+                        </OverflowToolbar>
+                    </headerToolbar>
+
+                    <!-- <infoToolbar>
+                        <OverflowToolbar
+                            design="Info"
+                            visible="true"
+                        >
+                            <content>
+                                <Label text="{i18n>info.tableMessage}" />
+                                <ToolbarSpacer />
+                                <Text
+                                    text="{= ${LocalModel>/data}.length + ' ' + ${i18n>label.records} }"
+                                />
+                            </content>
+                        </OverflowToolbar>
+                    </infoToolbar> -->
+
+                    <columns>
+                        <Column width="14rem">
+                            <header>
+                                <Text text="{i18n>label.employee.name}" />
+                            </header>
+                        </Column>
+
+                        <Column width="10rem">
+                            <header>
+                                <Text text="{i18n>label.employee.id}" />
+                            </header>
+                        </Column>
+
+                        <Column width="9rem">
+                            <header>
+                                <Text text="{i18n>label.task.id}" />
+                            </header>
+                        </Column>
+
+                        <Column width="14rem">
+                            <header>
+                                <Text text="{i18n>label.task.name}" />
+                            </header>
+                        </Column>
+
+                        <Column width="10rem">
+                            <header>
+                                <Text text="{i18n>label.start.date}" />
+                            </header>
+                        </Column>
+
+                        <Column width="10rem">
+                            <header>
+                                <Text text="{i18n>label.end.date}" />
+                            </header>
+                        </Column>
+
+                        <Column
+                            width="8rem"
+                            hAlign="End"
+                        >
+                            <header>
+                                <Text text="{i18n>label.hours}" />
+                            </header>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem
+                            type="Active"
+                            vAlign="Middle"
+                        >
+                            <cells>
+                                <ObjectIdentifier
+                                    title="{LocalModel>EmployeeName}"
+                                    
+                                />
+
+                                <Text text="{LocalModel>EmployeeID}" />
+
+                                <Text text="{LocalModel>TaskID}" />
+
+                                <ObjectIdentifier
+                                    title="{LocalModel>TaskName}"
+                                    
+                                />
+
+                                <Text
+                                    text="{ path: 'LocalModel>StartDate', formatter: '.formatter.formatTableDate' }"
+                                />
+
+                                <Text
+                                    text="{ path: 'LocalModel>EndDate', formatter: '.formatter.formatTableDate' }"
+                                />
+
+                                <ObjectNumber
+                                    number="{LocalModel>HoursWorked}"
+                                    textAlign="End"
+                                    emphasized="false"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

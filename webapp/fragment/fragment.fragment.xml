@@ -1,44 +1,109 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
-    <Dialog id="taskDialog" title="{= ${params>/mode} === 'create' ? 'Create Task' : 'Update Task'}">
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="fragment_id_taskDialog"
+        draggable="true"
+        resizable="true"
+        stretch="false"
+        horizontalScrolling="false"
+        verticalScrolling="true"
+        contentWidth="25rem"
+        class="sapUiContentPadding">
+
         <content>
-            <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
-                <f:content>
-                    <Label text="Employee Name"/>
-                    <Input id="empName"/>
+            <VBox width="100%" class="sapUiSmallMarginEnd">
+                
+                <f:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    width="100%"
+                    singleContainerFullSize="true"
+                    labelSpanXL="12"
+                    labelSpanL="12"
+                    labelSpanM="12"
+                    labelSpanS="12"
+                    adjustLabelSpan="false">
 
-                    <Label text="Employee ID"/>
-                    <Input id="empId"/>
+                    <f:content>
+                        <Label text="{i18n>label.employee.name}" required="true"/>
+                        <Input
+                            id="fragment_id_empName"
+                            width="100%"
+                            placeholder="{i18n>placeholder.employee.name}"
+                            maxLength="50"
+                            liveChange="View1_onEmpNameLiveChange"/>
 
-                    <Label text="Task ID"/>
-                    <Input id="taskId"/>
+                        <Label text="{i18n>label.employee.id}" required="true"/>
+                        <Input
+                            id="fragment_id_empId"
+                            width="100%"
+                            placeholder="{i18n>placeholder.employee.id}"
+                            maxLength="20"
+                            liveChange="View1_onLiveChange"/>
 
-                    <Label text="Task Name"/>
-                    <Input id="taskName"/>
+                        <Label text="{i18n>label.task.id}" required="true"/>
+                        <Input
+                            id="fragment_id_taskId"
+                            width="100%"
+                            placeholder="{i18n>placeholder.task.id}"
+                            maxLength="50"
+                            liveChange="View1_onLiveChange"/>
 
-                    <Label text="Start Date"/>
-                    <DatePicker
-                        id="startDate"
-                        valueFormat="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                        displayFormat="yyyy-MM-dd"
-                        placeholder="Select Start Date" />
+                        <Label text="{i18n>label.task.name}" required="true"/>
+                        <Input
+                            id="fragment_id_taskName"
+                            width="100%"
+                            placeholder="{i18n>placeholder.task.name}"
+                            maxLength="100"
+                            liveChange="View1_onLiveChange"/>
 
-                    <Label text="End Date"/>
-                    <DatePicker
-                        id="endDate"
-                        valueFormat="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                        displayFormat="yyyy-MM-dd"
-                        placeholder="Select End Date" />
+            <Label text="{i18n>label.start.date}" required="true"/>
+<DatePicker
+    id="fragment_id_startDate"
+    width="100%"
+    valueFormat="yyyy-MM-dd"
+    displayFormat="dd/MM/yyyy"
+    placeholder="{i18n>placeholder.select.start}"
+    change="View1_onDateChange"/>
 
-                    <Label text="Hours"/>
-                    <Input id="hours" type="Number"/>
-                </f:content>
-            </f:SimpleForm>
+<Label text="{i18n>label.end.date}" required="true"/>
+<DatePicker
+    id="fragment_id_endDate"
+    width="100%"
+    valueFormat="yyyy-MM-dd"
+    displayFormat="dd/MM/yyyy"
+    placeholder="{i18n>placeholder.select.end}"
+    change="View1_onDateChange"/>
+
+                        <Label text="{i18n>label.hours}" required="true"/>
+                    
+<TimePicker
+    id="fragment_id_hours"
+    width="100%"
+    valueFormat="HH:mm"
+    displayFormat="HH:mm"
+    minutesStep="1"
+    placeholder="{i18n>placeholder.hours}"
+    change="View1_onLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
         </content>
+
         <beginButton>
-            <Button text="Submit" press="onSaveTask"/>
+            <Button
+                text="{i18n>button.submit}"
+                press="View1_onSaveTask"
+                type="Emphasized"/>
         </beginButton>
+
         <endButton>
-            <Button text="Cancel" press="onCloseDialog"/>
+            <Button
+                text="{i18n>button.cancel}"
+                press="View1_onCloseDialog"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>
